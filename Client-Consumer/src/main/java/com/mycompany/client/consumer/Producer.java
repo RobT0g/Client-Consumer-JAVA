@@ -12,13 +12,13 @@ public class Producer implements Runnable{
     public Buffer b;
     private int amnt = 10;
     
+    public Producer(Buffer b){
+        this.b = b;
+    }
+    
     public Producer(Buffer b, int amnt){
         this.b = b;
         this.amnt = amnt;
-    }
-    
-    public Producer(Buffer b){
-        this.b = b;
     }
     
     public void run(){
