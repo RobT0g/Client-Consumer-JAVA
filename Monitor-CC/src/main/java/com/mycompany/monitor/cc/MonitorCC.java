@@ -12,32 +12,24 @@ package com.mycompany.monitor.cc;
 public class MonitorCC {
 
     public static void main(String[] args) throws InterruptedException {
-        final Processor p = new Processor();
+        //Especificações de tamanho
+        int bufferSize = 10;
         
-        Thread t1 = new Thread(new Runnable(){
-            public void run(){
-                try{
-                    p.produce();
-                } catch(InterruptedException e){}
-            }
-        });
+        //Declaração das Threads
+        final Processor p = new Processor(bufferSize);
+        Thread t1 = new Thread(new Producer(p));
+        Thread t2 = new Thread(new Consumer(p));
         
-        Thread t2 = new Thread(new Runnable(){
-            public void run(){
-                try{
-                    p.consume();
-                } catch(InterruptedException e){}
-            }
-        });
-        
-        t1.start();
+        //Código pelo terminal
+        /*t1.start();
         t2.start();
         
         try{
             t1.join();
             t2.join();
-        }catch(InterruptedException e){
-            
-        }
+        }catch(InterruptedException e){}*/
+        
+        //Código pela interface
+        Interface.main(args, p);
     }
 }
