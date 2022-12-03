@@ -12,8 +12,7 @@ package com.mycompany.client.consumer;
 public class ClientConsumer {
 
     public static void main(String[] args) {
-        Interface.main(args);
-        /*Buffer b = new Buffer();
+        Buffer b = new Buffer();
         
         Thread consumer = new Thread(new Consumer(b));
         Thread producer = new Thread(new Producer(b));
@@ -26,6 +25,6 @@ public class ClientConsumer {
         }catch(InterruptedException e){
             System.out.println("ERRRO");
         }
-        System.out.println(b);*/
+        System.out.println(b);
     }
 }

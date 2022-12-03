@@ -69,42 +69,38 @@ public class Buffer {
     }
     
     public String consume(){
-        if(this.queue[0] != null){
-            try{
-                cons.acquire();
-            }catch(InterruptedException e){
-                System.out.println("InterruptedException caught");
-                return "ERROR";
-            }
-            String consumed = this.free();
-            System.out.println("Consumer got this " + consumed + " item;");
-            prod.release();
-            return "<html style=\"margin:auto;\">Consumer consumed\n" + consumed + "</html>";
+        try{
+            cons.acquire();
+        }catch(InterruptedException e){
+            System.out.println("InterruptedException caught");
+            return "ERROR";
         }
-        return "Empty buffer";
+        String consumed = this.free();
+        System.out.println("Consumer got this " + consumed + " item;");
+        prod.release();
+        return "<html style=\"margin:auto;\">Consumer consumed\n" + consumed + "</html>";
+        
     }
     
     public String produce(){
-        if(this.queue[this.size-1] == null){
-            try{
-                prod.acquire();
-            }catch(InterruptedException e){
-                System.out.println("InterruptedException caught");
-                return "ERROR";
-            }
-            if(this.step < 69){
-                String toPush = this.data[this.step];
-                if(this.push(toPush)){
-                    System.out.println("Producer generated " + toPush);
-                    this.step++;
-                }
-                cons.release();
-                return "<html style=\"margin:auto;\">Producer generated\n" + toPush + "</html>";
-            } else {
-                System.out.println("Data fully produced");
-                return "<html style=\"margin:auto;\">Data fully\nproduced</html>";
-            }
+        try{
+            prod.acquire();
+        }catch(InterruptedException e){
+            System.out.println("InterruptedException caught");
+            return "ERROR";
         }
-        return "<html style=\"margin:auto;\">Buffer is\nfull</html>";
+        if(this.step < 69){
+            String toPush = this.data[this.step];
+            if(this.push(toPush)){
+                System.out.println("Producer generated " + toPush);
+                this.step++;
+            }
+            cons.release();
+            return "<html style=\"margin:auto;\">Producer generated\n" + toPush + "</html>";
+        } else {
+            System.out.println("Data fully produced");
+            return "<html style=\"margin:auto;\">Data fully\nproduced</html>";
+        }
     }
+        //return "<html style=\"margin:auto;\">Buffer is\nfull</html>";
 }
