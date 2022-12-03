@@ -20,15 +20,6 @@ public class Interface extends javax.swing.JFrame {
         b = new Buffer(bs, this.buffer);
         consumer = new Thread(new Consumer(b, cs, this.Feed1));
         producer = new Thread(new Producer(b, ps, this.Feed2));
-        consumer.start();
-        producer.start();
-        
-        try{
-            consumer.join();
-            producer.join();
-        }catch(InterruptedException e){
-            System.out.println("ERRRO");
-        }
     }
 
     /**
@@ -139,6 +130,15 @@ public class Interface extends javax.swing.JFrame {
                 new Interface(bs, cs, ps).setVisible(true);
             }
         });
+         try{
+            Thread.sleep(2000);
+            consumer.start();
+            producer.start();
+            consumer.join();
+            producer.join();
+        }catch(InterruptedException e){
+            System.out.println("ERRRO");
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -77,6 +77,7 @@ public class Buffer {
     public String consume(){
         try{
             cons.acquire();
+            Thread.sleep(500);
         }catch(InterruptedException e){
             System.out.println("InterruptedException caught");
             return "ERROR";
@@ -93,6 +94,7 @@ public class Buffer {
     public String produce(){
         try{
             prod.acquire();
+            Thread.sleep(500);
         }catch(InterruptedException e){
             System.out.println("InterruptedException caught");
             return "ERROR";
