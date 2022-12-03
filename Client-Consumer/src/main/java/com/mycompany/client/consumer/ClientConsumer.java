@@ -12,15 +12,13 @@ package com.mycompany.client.consumer;
 public class ClientConsumer {
 
     public static void main(String[] args) {
-        //Código pela interface
-        //Interface.main(args);
+        //Especificações de tamanho
+        int bufferSize = 10;        //Mudar isso para configurar o tamanho do buffer
+        int timesRanConsumer = 30;  //Mudar isso para o número de vezes que o consumidor será executado
+        int timesRanProducer = 30;  //Mudar isso para o número de vezes que o produtor será executado
         
         //Código pelo terminal
-        int bufferSize = 10;    //Mudar isso para configurar o tamanho do buffer
-        Buffer b = new Buffer(bufferSize, null);
-        
-        int timesRanConsumer = 30; //Mudar isso para o número de vezes que o consumidor será executado
-        int timesRanProducer = 30; //Mudar isso para o número de vezes que o produtor será executado
+        /*Buffer b = new Buffer(bufferSize, null);
         
         Thread consumer = new Thread(new Consumer(b, timesRanConsumer, null));
         Thread producer = new Thread(new Producer(b, timesRanProducer, null));
@@ -33,6 +31,9 @@ public class ClientConsumer {
         }catch(InterruptedException e){
             System.out.println("ERRRO");
         }
-        System.out.println(b);
+        System.out.println(b);*/
+        
+        //Código pela interface
+        Interface.main(args, bufferSize, timesRanConsumer, timesRanProducer);
     }
 }

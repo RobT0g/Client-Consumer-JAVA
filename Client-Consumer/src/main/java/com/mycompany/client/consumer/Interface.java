@@ -15,11 +15,11 @@ public class Interface extends javax.swing.JFrame {
     /**
      * Creates new form Interface
      */
-    public Interface() {
+    public Interface(int bs, int cs, int ps) {
         initComponents();
-        b = new Buffer(10, this.buffer);
-        consumer = new Thread(new Consumer(b, 20, this.Feed1));
-        producer = new Thread(new Producer(b, 20, this.Feed2));
+        b = new Buffer(bs, this.buffer);
+        consumer = new Thread(new Consumer(b, cs, this.Feed1));
+        producer = new Thread(new Producer(b, ps, this.Feed2));
         consumer.start();
         producer.start();
         
@@ -110,7 +110,7 @@ public class Interface extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[], int bs, int cs, int ps) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -133,10 +133,10 @@ public class Interface extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Interface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+ 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Interface().setVisible(true);
+                new Interface(bs, cs, ps).setVisible(true);
             }
         });
     }
