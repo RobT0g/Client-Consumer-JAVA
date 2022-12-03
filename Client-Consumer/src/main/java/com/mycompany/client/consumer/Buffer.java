@@ -14,15 +14,17 @@ public class Buffer {
         "id", "est", "laborum"};
     private int step = 0;
     private int size = 10;
+    static javax.swing.JLabel output;
     public String[] queue = new String[10];
     static Semaphore prod = new Semaphore(0); 
     static Semaphore cons = new Semaphore(1); 
     
     public Buffer(){}
     
-    public Buffer(int size){
+    public Buffer(int size, javax.swing.JLabel out){
         this.size = size;
         this.queue = new String[this.size];
+        output = out;
     }
     
     private boolean push(String item){
@@ -36,6 +38,8 @@ public class Buffer {
             return false;
         }
         this.queue[i] = item;
+        if(output != null)
+            output.setText(this.toString());
         return true;
     }
     
@@ -52,6 +56,8 @@ public class Buffer {
                 break;
         }
         this.queue[i+1] = null;
+        if(output != null)
+            output.setText(this.toString());
         return first;
     }
     
@@ -76,10 +82,12 @@ public class Buffer {
             return "ERROR";
         }
         String consumed = this.free();
-        System.out.println("Consumer got this " + consumed + " item;");
         prod.release();
-        return "<html style=\"margin:auto;\">Consumer consumed\n" + consumed + "</html>";
-        
+        if(consumed != null){
+            System.out.println("Consumer got this " + consumed + " item;");
+            return "Consumer consumed " + consumed;
+        }
+        return "Empty buffer";
     }
     
     public String produce(){
@@ -91,16 +99,17 @@ public class Buffer {
         }
         if(this.step < 69){
             String toPush = this.data[this.step];
-            if(this.push(toPush)){
+            boolean pushed = this.push(toPush);
+            cons.release();
+            if(pushed){
                 System.out.println("Producer generated " + toPush);
                 this.step++;
+                return "Producer generated " + toPush;
             }
-            cons.release();
-            return "<html style=\"margin:auto;\">Producer generated\n" + toPush + "</html>";
+            return "Buffer full";
         } else {
             System.out.println("Data fully produced");
-            return "<html style=\"margin:auto;\">Data fully\nproduced</html>";
+            return "Data fully produced";
         }
     }
-        //return "<html style=\"margin:auto;\">Buffer is\nfull</html>";
 }
