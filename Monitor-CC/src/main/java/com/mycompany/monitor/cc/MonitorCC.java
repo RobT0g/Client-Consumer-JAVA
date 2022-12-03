@@ -11,7 +11,33 @@ package com.mycompany.monitor.cc;
  */
 public class MonitorCC {
 
-    public static void main(String[] args) {
-        System.out.println("Hello World!");
+    public static void main(String[] args) throws InterruptedException {
+        final Processor p = new Processor();
+        
+        Thread t1 = new Thread(new Runnable(){
+            public void run(){
+                try{
+                    p.produce();
+                } catch(InterruptedException e){}
+            }
+        });
+        
+        Thread t2 = new Thread(new Runnable(){
+            public void run(){
+                try{
+                    p.consume();
+                } catch(InterruptedException e){}
+            }
+        });
+        
+        t1.start();
+        t2.start();
+        
+        try{
+            t1.join();
+            t2.join();
+        }catch(InterruptedException e){
+            
+        }
     }
 }

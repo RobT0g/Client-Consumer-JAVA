@@ -23,7 +23,7 @@ public class Processor {
         Scanner scan = new Scanner(System.in);
         Thread.sleep(2000);
         synchronized(this){
-            System.out.println("Wainting for input...");
+            System.out.println("Waiting for input...");
             scan.nextLine();
             System.out.println("Got the input.");
             notify();
